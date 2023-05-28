@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Encriptador</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<img id="logo" src="Resources/Logo.png">
+	</header>
+
+	<div>
+		<input type="text" id="text-input" placeholder="Ingresa el texto aquí" oninput="sanitizeInput()">
+	</div>
+
+	<div id="note">
+		<img id="signe" src="Resources/bi_exclamation-circle-fill.png">
+		<h2 id="permition">Solo letras minusculas y sin acento</h2>
+	</div>
+
+	<div id="outpot">
+		<img id="toy" src="Resources/Muñeco.png">
+		<div id="text-outpot">
+			<h2 id="text1">Ningún mensaje fue encontrado</h2>
+			<h3 id="text2">Ingresa el texto que deseas encriptar o descencriptar</h3>
+		</div>
+		<button id="copy-btn" onclick="copy()">Copiar</button>
+	</div>
+
+	<div id="buttons">
+		<button id="encrypt-btn" onclick="encrypt()">Encriptar</button>
+		<button id="decrypt-btn" onclick="decrypt()">Desencriptar</button>
+	</div>
+	<script>
+        const charactersE = {"a" : "ai", "e" : "enter", "i" : "imes", "o" : "ober", "u" : "ufat" }
+
+        const charactersD = {"ai" : "a", "enter" : "e", "imes" : "i", "ober" : "o", "ufat" : "u" }
+
+		//Encriptar
+		function encrypt() {
+			const inputText = document.getElementById("text-input").value;
+			let outputText = "";
+			for (let x = 0; x < inputText.length; x++) {
+				if (charactersE[inputText[x]]) {
+					outputText += charactersE[inputText[x]];} 
+					else {
+					outputText += inputText[x];}}
+			document.getElementById("text-input").value = outputText; }
+		
+        // Desencriptar
+		function decrypt() {
+		const inputText = document.getElementById("text-input").value;
+		let outputText = "";
+		outputText = inputText.replace(
+		new RegExp(Object.keys(charactersD).join("|"), "gi"),
+		matched => charactersD[matched.toLowerCase()] );
+		document.getElementById("text-input").value = outputText; }
+		
+		// Copiar
+		function copy() {
+			const inputText = document.getElementById("text-input");
+			inputText.select();
+			document.execCommand("copy");
+			alert("Texto copiado al portapapeles: " + inputText.value); }
+		
+		// Restingir el ingreso de caracteres especiales, números y convertir letras mayúsculas a minúsculas
+		function sanitizeInput() {
+			const inputText = document.getElementById("text-input").value;
+			const regex = /^[a-z\s]*$/;
+			if (!regex.test(inputText)) {
+				document.getElementById("text-input").value = inputText.replace(/[^a-z\s]/gi, "").toLowerCase(); }}
+		
+		document.getElementById("output-btn").addEventListener("click", function () {
+			const outputText = document.getElementById("text-input").value;});
+	</script>
+
+	<footer>
+		<p2>Jhonier Santacruz</p2>
+	</footer>
+</body>
+</html>
